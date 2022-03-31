@@ -1,0 +1,48 @@
+
+(defcfg
+  ;; For Linux
+  input  (device-file "/dev/input/eventxx")
+  output (uinput-sink "My KMonad output"
+    "sleep 1 && setxkbmap -option compose:menu")
+  cmp-seq ralt
+  fallthrough true
+  allow-cmd true
+)
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret       
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft           
+  lctl lmet lalt           spc            ralt rmet cmp  rctl           
+)
+
+(deflayer qwerty
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    
+  @esc a    s    d    f    g    h    j    k    l    ;    '    ret       
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft           
+  @ctl lmet lalt           @spc           ralt rmet cmp  rctl           
+)
+
+(deflayer arrows
+  _    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _
+  _    XX   XX   XX   prnt XX   XX   home up   end  XX   _    XX   XX 
+  _    XX   XX   XX   XX   XX   del  lft  down rght XX   XX   _       
+  _    XX   XX   XX   XX   XX   XX   bspc XX   XX   XX   XX           
+  _    _    _              XX             XX   XX   XX   XX           
+)
+
+(deflayer left-control
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _ 
+  _    _    _    _    _    _    _    _    _    _    _    _    _      
+  _    C-/  C-b  C-i  C-.  _    _    _    _    _    _    _           
+  _    _    _              _              _    _    _    _           
+)
+
+(defalias
+  spc (tap-hold-next-release 1000  spc (layer-toggle arrows))
+  esc (tap-next-release esc rctl)
+  ctl (around lctl (layer-toggle left-control))
+)
