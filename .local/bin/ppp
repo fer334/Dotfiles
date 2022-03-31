@@ -1,5 +1,0 @@
-#!/bin/bash
-echo "Hola"
-
-echo `date +"%s"` $@ >> ~/prueba.txt
-
