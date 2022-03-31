@@ -7,7 +7,7 @@ function run {
         sleep 0.5
     else
         echo "Running $event"
-        cp /home/fer/.local/share/kmonad/draconic.kbd /tmp/keymap.kbd
+        cp ~/.local/share/kmonad/draconic.kbd /tmp/keymap.kbd
         chmod +x /tmp/keymap.kbd
         sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
         sleep 1 && kmonad /tmp/keymap.kbd
@@ -22,7 +22,7 @@ if [ -z "$1" ]; then
 else
     event=$1
     echo "Running $event"
-    cp /home/fer/.local/share/kmonad/hp.kbd /tmp/keymap.kbd
+    cp ~/.local/share/kmonad/hp.kbd /tmp/keymap.kbd
     chmod +x /tmp/keymap.kbd
     sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
     sleep 1 && kmonad /tmp/keymap.kbd
