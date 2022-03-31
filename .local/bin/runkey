@@ -1,4 +1,4 @@
-# create a funtion called "run" that will run the command
+
 function run {
     "$@"
     event=$(grep -B 8 -A 4 12001 /proc/bus/input/devices | grep "Draconic -1 Keyboard" -A 4 | grep -oE 'event[0-9]+')
@@ -7,7 +7,7 @@ function run {
         sleep 0.5
     else
         echo "Running $event"
-        cp /home/fer/Documentos/software/kmonad/keymap/fer.kbd /tmp/keymap.kbd
+        cp /home/fer/.local/share/kmonad/draconic.kbd /tmp/keymap.kbd
         chmod +x /tmp/keymap.kbd
         sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
         sleep 1 && kmonad /tmp/keymap.kbd
@@ -22,7 +22,7 @@ if [ -z "$1" ]; then
 else
     event=$1
     echo "Running $event"
-    cp /home/fer/Documentos/software/kmonad/keymap/fer.kbd /tmp/keymap.kbd
+    cp /home/fer/.local/share/kmonad/draconic.kbd /tmp/keymap.kbd
     chmod +x /tmp/keymap.kbd
     sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
     sleep 1 && kmonad /tmp/keymap.kbd
