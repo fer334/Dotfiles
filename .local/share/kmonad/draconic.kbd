@@ -1,0 +1,74 @@
+
+(defcfg
+  ;; For Linux
+  input  (device-file "/dev/input/eventxx")
+  output (uinput-sink "My KMonad output"
+    "sleep 2 && setxkbmap -option compose:menu")
+  cmp-seq ralt
+  fallthrough true
+  allow-cmd true
+)
+
+(defsrc
+  esc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    prnt home end
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup pgdn
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft           ins  del 
+  lctl lmet lalt           spc            ralt rmet cmp  rctl           left up   down rght
+)
+
+(deflayer qwerty
+  grv
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    p    [    ]
+  @esc a    s    d    f    g    h    j    k    l    ;    '    ret       ;    '
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft           .    / 
+  @ctl lmet lalt           @spc           ralt rmet cmp  rctl           a    w    s    d
+)
+
+(deflayer arrows
+  esc
+  _    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _
+  _    XX   XX   XX   @prn XX   XX   home up   end  XX   _    XX   XX   XX   XX   XX
+  _    XX   XX   XX   @vol XX   del  lft  down rght XX   XX   _         XX   XX
+  _    XX   XX   XX   XX   XX   XX   bspc XX   XX   XX   XX             XX   XX
+  _    _    _              XX             XX   XX   XX   XX             XX   XX   XX   XX
+)
+
+(deflayer left-control
+  _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _         _    _
+  _    C-/  C-b  C-i  C-.  _    _    _    _    _    _    _              _    _
+  _    _    _              _              _    _    _    _              _    _    _    _
+)
+
+(deflayer number
+  _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    6    kp7  kp8  kp9  kp-  _    _    _    _    _    _
+  _    _    _    _    _    _    kp*  kp4  kp5  kp6  kp+  _    _         _    _
+  _    _    _    _    _    _    kp0  kp1  kp2  kp3  kp/  _              _    _
+  _    _    _              _              _    _    _    _              _    _    _    _
+)
+
+(deflayer volume
+  esc
+  _    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _
+  _    XX   XX   XX   XX   XX   XX   play volu @nxs XX   _    XX   XX   XX   XX   XX
+  _    XX   XX   XX   XX   XX   XX   brdn vold brup XX   XX   _         XX   XX
+  _    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX             XX   XX
+  _    _    _              XX             XX   XX   XX   XX             XX   XX   XX   XX
+)
+
+(defalias
+  spc (tap-hold-next-release 1000  spc (layer-toggle arrows))
+  esc (tap-next-release esc rctl)
+  vol (layer-toggle volume)
+  ctl (around lctl (layer-toggle left-control))
+  prn C-S-prnt
+  nxs nextsong
+  taa (layer-toggle number)
+)
