@@ -3,7 +3,7 @@
   ;; For Linux
   input  (device-file "/dev/input/eventxx")
   output (uinput-sink "My KMonad output"
-    "sleep 1 && setxkbmap -option compose:menu")
+    "sleep 1")
   cmp-seq ralt
   fallthrough true
   allow-cmd true
@@ -15,6 +15,12 @@
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       
   lsft z    x    c    v    b    n    m    ,    .    /    rsft           
   lctl lmet lalt           spc            ralt rmet cmp  rctl           
+)
+
+(defalias
+  spc (tap-hold-next-release 500 spc (layer-toggle arrows))
+  esc (tap-hold-next 2000 esc rctl)
+  ctl (around lctl (layer-toggle left-control))
 )
 
 (deflayer qwerty
@@ -39,10 +45,4 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _      
   _    C-/  C-b  C-i  C-.  _    _    _    _    _    _    _           
   _    _    _              _              _    _    _    _           
-)
-
-(defalias
-  spc (tap-hold-next-release 1000  spc (layer-toggle arrows))
-  esc (tap-next-release esc rctl)
-  ctl (around lctl (layer-toggle left-control))
 )
