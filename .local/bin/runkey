@@ -1,7 +1,8 @@
+#!/bin/bash
 
 function run {
     "$@"
-    event=$(grep -B 8 -A 4 12001 /proc/bus/input/devices | grep "Draconic -1 Keyboard" -A 4 | grep -oE 'event[0-9]+')
+    event=$(grep -B 8 -A 4 12001 /proc/bus/input/devices | grep "Draconic" -A 4 | grep -oE 'event[0-9]+')
     if [ -z "$event" ]; then
         echo "No event found"
         sleep 0.5
@@ -10,7 +11,8 @@ function run {
         cp ~/.local/share/kmonad/draconic.kbd /tmp/keymap.kbd
         chmod +x /tmp/keymap.kbd
         sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
-        sleep 1 && kmonad /tmp/keymap.kbd
+        notify-send -e Teclado "El teclado esta siendo interceptado"
+        sleep 1 && kmonad /tmp/keymap.kbd 
     fi
 }
 
@@ -25,5 +27,6 @@ else
     cp ~/.local/share/kmonad/hp.kbd /tmp/keymap.kbd
     chmod +x /tmp/keymap.kbd
     sed -i 's:eventxx:'$event':' /tmp/keymap.kbd
+    notify-send -e Teclado "El teclado esta siendo interceptado"
     sleep 1 && kmonad /tmp/keymap.kbd
 fi
